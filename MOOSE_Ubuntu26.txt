@@ -1,0 +1,51 @@
+# Nicolò Grilli
+# Università di Bristol
+# 1 Maggio 2026
+
+# Install MOOSE framework on a fresh Ubuntu OS 26
+
+sudo apt update
+sudo apt install htop
+sudo apt install vim
+
+sudo apt install build-essential
+gcc --version
+g++ --version
+
+sudo apt install gfortran
+gfortran --version
+
+sudo apt install python-is-python3
+python --version
+python3 --version
+
+sudo apt install cmake
+cmake --version
+make --version
+
+sudo apt install git
+git --version
+
+sudo apt install mpich
+sudo apt install libmpich-dev
+sudo apt install libomp-dev
+sudo apt install openmpi-bin
+sudo apt install libopenmpi-dev
+sudo apt-get install libpmix-dev
+sudo apt-get install libevent-dev
+which mpicc mpicxx mpif90
+mpicc --version
+mpiexec --version
+mpirun --version
+
+sudo apt install zlib1g-dev
+
+mkdir projects
+cd projects/
+git clone https://github.com/idaholab/moose.git
+cd moose/
+git checkout master
+cd scripts/
+export MOOSE_JOBS=2 METHODS=opt
+./update_and_rebuild_petsc.sh
+
