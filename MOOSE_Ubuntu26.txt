@@ -39,6 +39,8 @@ mpiexec --version
 mpirun --version
 
 sudo apt install zlib1g-dev
+sudo apt-get install flex
+sudo apt-get install bison
 
 mkdir projects
 cd projects/
