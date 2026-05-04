@@ -33,14 +33,24 @@ sudo apt install openmpi-bin
 sudo apt install libopenmpi-dev
 sudo apt-get install libpmix-dev
 sudo apt-get install libevent-dev
+export CC=mpicc
+export CXX=mpicxx
+export FC=mpif90
 which mpicc mpicxx mpif90
 mpicc --version
 mpiexec --version
 mpirun --version
 
+# if using only OpenMPI
+# sudo apt install openmpi-bin
+# sudo apt install libopenmpi-dev
+# sudo apt install libomp-dev
+# sudo apt-get install libevent-dev
+# sudo apt-get install libpmix-dev
+
 sudo apt install zlib1g-dev
-sudo apt-get install flex
-sudo apt-get install bison
+sudo apt install flex
+sudo apt install bison
 
 mkdir projects
 cd projects/
@@ -50,4 +60,18 @@ git checkout master
 cd scripts/
 export MOOSE_JOBS=2 METHODS=opt
 ./update_and_rebuild_petsc.sh
+
+sudo apt install libtirpc-dev
+./update_and_rebuild_libmesh.sh
+
+./update_and_rebuild_wasp.sh
+
+sudo apt install python3-pip
+sudo apt install python3-packaging
+sudo apt install python3-numpy
+sudo apt install python3-pandas
+export PYTHONPATH=$PYTHONPATH:~/moose/python
+
+cd ~/projects/moose/test/
+make
 
