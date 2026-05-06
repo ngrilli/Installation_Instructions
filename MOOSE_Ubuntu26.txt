@@ -37,6 +37,12 @@ sudo apt install zlib1g-dev
 sudo apt install flex
 sudo apt install bison
 
+# to avoid mpicc compiled programs hanging
+# when launched without mpiexec
+# this affects both moose executables and ./run_tests
+# add to .bashrc
+export HWLOC_COMPONENTS=-gl
+
 mkdir projects
 cd projects/
 git clone https://github.com/idaholab/moose.git
@@ -55,8 +61,23 @@ sudo apt install python3-pip
 sudo apt install python3-packaging
 sudo apt install python3-numpy
 sudo apt install python3-pandas
-export PYTHONPATH=$PYTHONPATH:~/moose/python
+
+# objects to remove from phase field module 
+# as not compatible with gcc 15.2.0
+# VanDerWaalsFreeEnergy
+# SwitchingFunction3PhaseMaterial
+# LinearizedInterfaceFunction
+# EBCoupledVarTest
 
 cd ~/projects/moose/test/
 make
 
+cd ~/projects/moose/modules/combined/
+make
+
+cd ~/projects
+git clone https://github.com/ngrilli/c_pfor_am
+cd c_pfor_am
+make Bristol_CP
+make
+./run_tests
