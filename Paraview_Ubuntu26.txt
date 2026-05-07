@@ -1,0 +1,9 @@
+# after MOOSE_Ubuntu.txt
+
+sudo apt update
+
+sudo apt install qtwayland5
+
+sudo apt install libxcb-xinerama0 
+sudo apt install libxcb-cursor0
+
