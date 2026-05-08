@@ -1,0 +1,23 @@
+# after MOOSE_Ubuntu.txt 
+# and Paraview_Ubuntu26.txt
+
+wget https://dl.openfoam.com/source/v2506/OpenFOAM-v2506.tgz
+wget https://dl.openfoam.com/source/v2506/ThirdParty-v2506.tgz
+
+tar -xvf OpenFOAM-v2506.tgz
+tar -xvf ThirdParty-v2506.tgz
+
+cd ThirdParty-v2506
+source ~/projects/OpenFOAM-v2506/etc/bashrc
+./Allwmake -q -j
+
+cd ~/projects/OpenFOAM-v2506/
+./Allwmake -q -j
+
+cd ~/projects
+git clone https://github.com/laserbeamfoam/LaserbeamFoam
+cd LaserbeamFoam
+./Allwmake -q -j
+
+
+
