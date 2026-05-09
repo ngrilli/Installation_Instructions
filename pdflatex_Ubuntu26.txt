@@ -1,0 +1,15 @@
+# Nicolò Grilli
+# Università di Bristol
+# 9 Maggio 2026
+
+# pdflatex installation to be able to compile Elsevier articles
+
+sudo apt-get install texlive-latex-base
+
+sudo apt-get install texlive-fonts-recommended
+sudo apt-get install texlive-fonts-extra
+
+sudo apt-get install texlive-latex-extra
+
+sudo apt-get install texlive-publishers
+
