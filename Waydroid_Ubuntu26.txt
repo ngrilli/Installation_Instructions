@@ -1,0 +1,36 @@
+# Nicolò Grilli
+# Università di Bristol
+# 26 Maggio 2026
+
+# Install Waydroid on Ubuntu 26
+
+# https://www.youtube.com/watch?v=ZbcOQJyxN3E
+
+sudo apt install curl
+sudo apt install ca-certificates
+
+curl https://repo.waydro.id | sudo bash
+
+sudo apt install waydroid
+
+sudo apt update
+sudo apt upgrade
+
+# Open Waydroid GUI
+# Android Type: Android with Google Apps
+# Download
+# Done
+
+sudo waydroid shell
+
+ANDROID_RUNTIME_ROOT=/apex/com.android.runtime ANDROID_DATA=/data ANDROID_TZDATA_ROOT=/apex/com.android.tzdata ANDROID_I18N_ROOT=/apex/com.android.i18n sqlite3 /data/data/com.google.android.gsf/databases/gservices.db "select * from main where name = \"android_id\";"
+
+# save the android_id
+# go to https://www.google.com/android/uncertified
+# enter the ID (only the number)
+# Register
+# wait a few minutes for google to register the device
+# and restart the computer
+
+
+
