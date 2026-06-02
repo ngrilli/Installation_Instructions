@@ -1,0 +1,56 @@
+# Nicolò Grilli
+# Università di Bristol
+# 2 Giugno 2026
+
+# Install MOOSE framework on Rocky Linux
+# on BluePebble University of Bristol HPC
+
+module load openmpi/5.0.3-et6p
+module load gcc/12.3.0-sknc
+module load languages/python/3.14.3
+
+export CC=mpicc
+export CXX=mpicxx
+export F90=mpif90
+export F77=mpif77
+export FC=mpif90
+
+mkdir -p ~/projects
+cd ~/projects
+git clone https://github.com/idaholab/moose.git
+cd moose
+git checkout master
+
+cd ~/projects/
+wget https://github.com/Kitware/CMake/releases/download/v4.3.1/cmake-4.3.1.tar.gz
+tar -xvzf cmake-4.3.1.tar.gz
+cd cmake-4.3.1/
+mkdir build
+cd build/
+../bootstrap --prefix=$HOME/projects/cmake/
+make
+make install
+export PATH="/user/home/qu21249/projects/cmake/bin:$PATH"
+
+cd ~/projects/moose/scripts
+export MOOSE_JOBS=2 METHODS=opt
+./update_and_rebuild_petsc.sh --download-zlib
+./update_and_rebuild_libmesh.sh --disable-xdr-required
+./update_and_rebuild_wasp.sh
+
+pip install --user pyyaml
+pip install --user jinja2
+pip install --user packaging
+pip install --user pandas
+
+cd ~/projects/moose/test
+make
+cd ~/projects/moose/modules/combined
+make
+
+cd ~/projects
+git clone https://github.com/ngrilli/c_pfor_am
+cd c_pfor_am
+make Bristol_CP
+make
+./run_tests
