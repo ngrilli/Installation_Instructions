@@ -1,0 +1,54 @@
+# Nicolò Grilli
+# Università di Bristol
+# 12 Giugno 2026
+
+# Install MOOSE framework on SUSE 15.5
+# on Isambard 3 HPC
+
+module load PrgEnv-gnu/8.5.0
+module load cray-python/3.11.7
+pip install pyaml
+pip install jinja2
+pip install packaging
+pip install pandas
+pip install numpy
+
+mkdir packages
+cd packages/
+mkdir cmake
+cd
+
+mkdir projects
+cd projects/
+wget https://github.com/Kitware/CMake/releases/download/v4.4.0-rc1/cmake-4.4.0-rc1.tar.gz
+tar -xvzf cmake-4.4.0-rc1.tar.gz
+cd cmake-4.4.0-rc1/
+mkdir build
+cd build/
+../bootstrap --prefix=$HOME/packages/cmake/ -- -DCMAKE_USE_OPENSSL=OFF
+make -j 32
+make install
+export PATH="$HOME/packages/cmake/bin:$PATH"
+
+cd ~/projects
+git clone https://github.com/idaholab/moose.git
+cd moose
+git checkout master
+
+cd ~/projects/moose/scripts
+export MOOSE_JOBS=32 METHODS=opt
+./update_and_rebuild_petsc.sh --download-zlib
+./update_and_rebuild_libmesh.sh --disable-xdr-required
+./update_and_rebuild_wasp.sh 
+
+cd ~/projects/moose/test
+make -j 6
+
+cd ~/projects/moose/modules/combined/
+make -j 6
+
+cd ~/projects/
+git clone https://github.com/ngrilli/c_pfor_am
+cd c_pfor_am
+make Bristol_CP
+make
